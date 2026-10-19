@@ -1,0 +1,518 @@
+/* =========================
+   SONORA — CHECKOUT
+========================= */
+
+/* =========================
+   01. ESTRUTURA
+========================= */
+
+.checkout {
+    padding: 50px var(--page-padding) 110px;
+}
+
+.checkout-secure {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-muted);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.checkout-secure span {
+    color: var(--color-accent);
+    font-size: 0.5rem;
+}
+
+.checkout-heading {
+    margin-bottom: 50px;
+}
+
+.checkout-heading .eyebrow {
+    margin-bottom: 18px;
+}
+
+.checkout-heading h1 {
+    font-size: clamp(3rem, 7vw, 6rem);
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -0.08em;
+}
+
+.checkout-heading h1 span {
+    color: var(--color-accent);
+}
+
+.checkout-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.9fr);
+    align-items: start;
+    gap: clamp(40px, 6vw, 90px);
+}
+
+
+/* =========================
+   02. FORMULÁRIO
+========================= */
+
+.checkout-step {
+    margin: 0 0 42px;
+    padding: 0;
+    border: 0;
+}
+
+.checkout-step legend {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #cfcdc6;
+
+    font-size: 1.2rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.checkout-step legend span {
+    color: var(--color-accent);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+/* =========================
+   03. PAGAMENTO
+========================= */
+
+.payment-options {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.payment-option {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 18px 16px;
+    border: 1px solid #cfcdc6;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.payment-option:hover {
+    border-color: #a9a7a0;
+}
+
+/* O rádio nativo fica invisível; o card inteiro é o controle. */
+.payment-option input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.payment-option:has(input:checked) {
+    border-color: var(--color-text);
+    background: rgba(255, 255, 255, 0.5);
+    box-shadow: inset 0 0 0 1px var(--color-text);
+}
+
+.payment-option:has(input:focus-visible) {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+}
+
+.payment-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.payment-detail {
+    color: var(--color-muted);
+    font-size: 0.72rem;
+}
+
+
+/* =========================
+   04. BOTÃO PRINCIPAL
+========================= */
+
+.checkout-submit {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 10px;
+    padding: 21px 22px;
+    border: 0;
+    background: var(--color-text);
+    color: white;
+
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+
+    transition: background-color 0.25s ease, transform 0.25s ease;
+}
+
+.checkout-submit:hover {
+    background: var(--color-accent);
+}
+
+.checkout-submit:active {
+    transform: scale(0.99);
+}
+
+.checkout-submit:disabled {
+    background: #5a5a57;
+    cursor: progress;
+}
+
+.checkout-disclaimer {
+    margin-top: 14px;
+    color: var(--color-muted);
+    font-size: 0.68rem;
+    line-height: 1.6;
+}
+
+.checkout-disclaimer a {
+    color: var(--color-text);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+
+/* =========================
+   05. RESUMO DO PEDIDO
+========================= */
+
+.order-summary {
+    position: sticky;
+    top: calc(var(--header-height) + 24px);
+    padding: 30px;
+    background: #dfddd6;
+}
+
+.order-summary h2 {
+    padding-bottom: 18px;
+    border-bottom: 1px solid #c9c7c0;
+    font-size: 1.2rem;
+    letter-spacing: -0.5px;
+}
+
+.summary-item {
+    display: grid;
+    grid-template-columns: 64px 1fr auto;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 0;
+    border-bottom: 1px solid #c9c7c0;
+}
+
+.summary-thumb {
+    position: relative;
+}
+
+.summary-thumb img {
+    width: 64px;
+    height: 72px;
+    object-fit: cover;
+    background: #e9e7e1;
+}
+
+.summary-qty {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+
+    display: grid;
+    place-items: center;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 6px;
+    border-radius: 999px;
+    background: var(--color-text);
+    color: var(--color-bg);
+
+    font-size: 0.62rem;
+    font-weight: 700;
+}
+
+.summary-info h3 {
+    font-size: 0.85rem;
+}
+
+.summary-info p {
+    margin-top: 4px;
+    color: var(--color-muted);
+    font-size: 0.68rem;
+    letter-spacing: 0.5px;
+}
+
+.summary-info .summary-stock {
+    color: #8f2416;
+    font-weight: 700;
+}
+
+.summary-remove {
+    margin-top: 6px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--color-text);
+    font: inherit;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+}
+
+.summary-remove:hover {
+    color: var(--color-accent);
+}
+
+.summary-price {
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.summary-totals {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-top: 20px;
+    font-size: 0.82rem;
+}
+
+.summary-totals > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.summary-totals > div[hidden] {
+    display: none;
+}
+
+.summary-totals dt {
+    color: #555550;
+}
+
+#summary-discount-row dd {
+    color: #1f7a45;
+}
+
+.summary-total {
+    margin-top: 6px;
+    padding-top: 16px;
+    border-top: 1px solid #c9c7c0;
+    font-size: 1.05rem;
+    font-weight: 800;
+}
+
+.summary-total dt {
+    color: var(--color-text);
+}
+
+.summary-installments {
+    margin-top: 8px;
+    color: var(--color-muted);
+    font-size: 0.72rem;
+    text-align: right;
+}
+
+
+/* =========================
+   06. SACOLA VAZIA E SUCESSO
+========================= */
+
+.checkout-empty,
+.checkout-success {
+    max-width: 640px;
+}
+
+.checkout-empty p {
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.checkout-empty > span {
+    display: block;
+    margin: 10px 0 30px;
+    color: var(--color-muted);
+    font-size: 0.9rem;
+}
+
+.checkout-success:focus {
+    outline: none;
+}
+
+.checkout-success .eyebrow {
+    margin-bottom: 20px;
+    color: var(--color-accent);
+}
+
+.checkout-success h2 {
+    font-size: clamp(3rem, 7vw, 5.5rem);
+    font-weight: 900;
+    line-height: 0.92;
+    letter-spacing: -0.08em;
+}
+
+.checkout-success h2 span {
+    display: block;
+    color: var(--color-accent);
+}
+
+.success-message {
+    max-width: 520px;
+    margin-top: 28px;
+    color: #555550;
+    font-size: 0.9rem;
+    line-height: 1.8;
+}
+
+.success-details {
+    margin: 36px 0 30px;
+    border-top: 1px solid #cfcdc6;
+}
+
+.success-details > div {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid #cfcdc6;
+    font-size: 0.85rem;
+    line-height: 1.6;
+}
+
+.success-details dt {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding-top: 3px;
+}
+
+
+/* =========================
+   07. RESPONSIVIDADE
+========================= */
+
+@media (max-width: 960px) {
+    .checkout-layout {
+        grid-template-columns: 1fr;
+    }
+
+    /* No celular o resumo aparece antes do formulário. */
+    .order-summary {
+        position: static;
+        order: -1;
+    }
+}
+
+@media (max-width: 760px) {
+    .checkout {
+        padding-top: 35px;
+        padding-bottom: 75px;
+    }
+
+    .checkout-secure {
+        display: none;
+    }
+
+    .field-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .field--wide {
+        grid-column: 1 / -1;
+    }
+
+    .payment-options {
+        grid-template-columns: 1fr;
+    }
+
+    .order-summary {
+        padding: 22px;
+    }
+
+    .back-to-store {
+        padding: 10px 12px;
+        font-size: 0.58rem;
+    }
+}
+
+@media (max-width: 420px) {
+    .field-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .success-details > div {
+        grid-template-columns: 1fr;
+        gap: 4px;
+    }
+}
+
+
+/* =========================
+   08. CONTA NO CHECKOUT E AÇÕES DO SUCESSO
+========================= */
+
+.checkout-account {
+    margin-bottom: 34px;
+    padding: 16px 18px;
+    background: #dfddd6;
+    font-size: 0.82rem;
+    line-height: 1.6;
+}
+
+.checkout-account a {
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.checkout-account a:hover {
+    color: var(--color-accent);
+}
+
+.checkout-form .form-message {
+    margin-bottom: 16px;
+}
+
+/* "Confirmando seu pagamento…" (volta do Stripe) */
+.checkout-status {
+    padding: 60px 0;
+    color: var(--color-muted);
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.payment-note strong {
+    color: var(--color-text);
+}
+
+.success-actions {
+    display: grid;
+    gap: 10px;
+}
+
+.checkout-submit--ghost {
+    border: 1px solid var(--color-text);
+    background: transparent;
+    color: var(--color-text);
+}
+
+.checkout-submit--ghost:hover {
+    background: var(--color-text);
+    color: #fff;
+}

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title data-i18n="admin.title">Painel — SONORA®</title>
+    <meta name="description" content="Painel administrativo da loja SONORA." data-i18n-attr="content:admin.metaDescription">
+    <meta name="theme-color" content="#e9e7e1">
+    <meta name="robots" content="noindex">
+
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="account.css">
+    <link rel="stylesheet" href="admin.css">
+
+    <!-- Idioma: primeiro e sem defer (veja i18n.js). -->
+    <script src="i18n.js"></script>
+
+    <script src="products.js" defer></script>
+    <script src="cart.js" defer></script>
+    <script src="favorites.js" defer></script>
+    <script src="ui.js" defer></script>
+    <script src="api.js" defer></script>
+    <script src="auth.js" defer></script>
+    <script src="account-sync.js" defer></script>
+    <script src="forms.js" defer></script>
+    <script src="cart-ui.js" defer></script>
+    <script src="admin.js" defer></script>
+</head>
+
+<body>
+    <a class="skip-link" href="#main" data-i18n="skip">Pular para o conteúdo</a>
+
+    <header class="header">
+        <a href="index.html" class="logo" aria-label="SONORA — página inicial" data-i18n-attr="aria-label:nav.home">SONORA®</a>
+
+        <nav class="navigation" aria-label="Navegação principal" data-i18n-attr="aria-label:nav.label">
+            <a href="index.html#products" data-i18n="nav.products">Produtos</a>
+            <a href="index.html#about" data-i18n="nav.brand">A marca</a>
+            <a href="index.html#concept" data-i18n="nav.concept">Conceito</a>
+        </nav>
+
+        <div class="header-actions">
+            <button type="button" class="lang-switch" data-lang-switch>
+                <span data-lang="pt">PT</span>
+                <span class="lang-switch-divider" aria-hidden="true">/</span>
+                <span data-lang="en">EN</span>
+            </button>
+
+            <a class="account-link" href="login.html" data-account-link aria-label="Entrar ou criar conta">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <circle cx="12" cy="8" r="4"/>
+                    <path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/>
+                </svg>
+                <span data-account-label>ENTRAR</span>
+            </a>
+
+            <button type="button" class="cart-button" data-cart-open>
+                BAG <span data-cart-count>0</span>
+                <span class="visually-hidden" data-i18n="bag.open">— abrir sacola</span>
+            </button>
+        </div>
+    </header>
+
+    <main id="main" class="account-page admin-page" aria-busy="true">
+
+        <div class="account-heading">
+            <p class="eyebrow" data-i18n="admin.eyebrow">ADMINISTRAÇÃO</p>
+            <h1 data-i18n-html="admin.heading">Painel<span>.</span></h1>
+            <p class="account-subtitle" data-i18n="admin.subtitle">Vendas, pedidos e produtos da loja.</p>
+        </div>
+
+        <!-- Conta logada sem permissão de admin -->
+        <div class="account-empty" id="admin-denied" hidden>
+            <p data-i18n="admin.deniedTitle">Área restrita.</p>
+            <span data-i18n="admin.deniedText">Esta página é só para administradores da loja. Peça acesso ou volte para a coleção.</span>
+            <a class="button-primary button-primary--auto" href="index.html">
+                <span data-i18n="admin.deniedButton">VOLTAR À LOJA</span>
+                <span aria-hidden="true">↗</span>
+            </a>
+        </div>
+
+        <div class="account-layout" id="admin-layout">
+            <!-- As seções abrem pelo endereço: admin.html#pedidos -->
+            <nav class="account-nav" aria-label="Seções do painel" data-i18n-attr="aria-label:admin.sections">
+                <a href="#visao-geral" data-admin-tab="overview" data-i18n="admin.tabOverview">Visão geral</a>
+                <a href="#pedidos" data-admin-tab="orders" data-i18n="admin.tabOrders">Pedidos</a>
+                <a href="#produtos" data-admin-tab="products" data-i18n="admin.tabProducts">Produtos</a>
+                <a href="conta.html" data-i18n="admin.myAccount">Minha conta</a>
+            </nav>
+
+            <div class="account-content">
+
+                <!-- VISÃO GERAL -->
+                <section data-admin-panel="overview" aria-labelledby="overview-title">
+                    <h2 class="visually-hidden" id="overview-title" data-i18n="admin.tabOverview">Visão geral</h2>
+
+                    <div class="admin-kpis" id="admin-kpis"></div>
+
+                    <div class="admin-columns">
+                        <div class="account-card">
+                            <h2 data-i18n="admin.statusTitle">Pedidos por status</h2>
+                            <ul class="admin-list" id="admin-status-list"></ul>
+                        </div>
+
+                        <div class="account-card">
+                            <h2 data-i18n="admin.topTitle">Mais vendidos</h2>
+                            <ol class="admin-list" id="admin-top-products"></ol>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- PEDIDOS -->
+                <section data-admin-panel="orders" aria-labelledby="orders-title" hidden>
+                    <h2 class="visually-hidden" id="orders-title" data-i18n="admin.tabOrders">Pedidos</h2>
+
+                    <form class="admin-toolbar" id="orders-filter" role="search">
+                        <div class="field">
+                            <label for="orders-search" data-i18n="admin.searchLabel">Buscar</label>
+                            <input id="orders-search" name="search" type="search" autocomplete="off" placeholder="Nº do pedido, nome ou e-mail" data-i18n-attr="placeholder:admin.searchPlaceholder">
+                        </div>
+
+                        <div class="field">
+                            <label for="orders-status" data-i18n="admin.statusLabel">Status</label>
+                            <select id="orders-status" name="status">
+                                <option value="all" data-i18n="admin.filterAll">Todos os pedidos</option>
+                                <option value="confirmed" data-i18n="orders.status.confirmed">Confirmado</option>
+                                <option value="shipped" data-i18n="orders.status.shipped">Enviado</option>
+                                <option value="delivered" data-i18n="orders.status.delivered">Entregue</option>
+                                <option value="cancelled" data-i18n="orders.status.cancelled">Cancelado</option>
+                                <option value="unpaid" data-i18n="admin.filterUnpaid">Cartão não pago</option>
+                            </select>
+                        </div>
+                    </form>
+
+                    <p class="form-message" id="orders-message" role="status" hidden></p>
+                    <p class="admin-count" id="orders-count" aria-live="polite"></p>
+
+                    <div class="orders-list" id="admin-orders"></div>
+
+                    <button type="button" class="text-button admin-more" id="orders-more" data-i18n="admin.loadMore" hidden>CARREGAR MAIS ↓</button>
+                </section>
+
+                <!-- PRODUTOS -->
+                <section data-admin-panel="products" aria-labelledby="products-title" hidden>
+                    <h2 class="visually-hidden" id="products-title" data-i18n="admin.tabProducts">Produtos</h2>
+
+                    <form class="admin-toolbar" id="products-filter" role="search">
+                        <div class="field">
+                            <label for="products-search" data-i18n="admin.searchLabel">Buscar</label>
+                            <input id="products-search" name="search" type="search" autocomplete="off" placeholder="Código, nome ou série" data-i18n-attr="placeholder:admin.productsSearchPlaceholder">
+                        </div>
+
+                        <div class="field">
+                            <label for="products-status" data-i18n="admin.statusLabel">Status</label>
+                            <select id="products-status" name="status">
+                                <option value="all" data-i18n="admin.filterAllProducts">Todos os produtos</option>
+                                <option value="active" data-i18n="admin.onSale">À venda</option>
+                                <option value="inactive" data-i18n="admin.offSale">Fora de linha</option>
+                            </select>
+                        </div>
+                    </form>
+
+                    <div class="admin-list-head">
+                        <p class="admin-count" id="products-count" aria-live="polite"></p>
+                        <button type="button" class="admin-action" id="product-new" aria-haspopup="dialog" data-i18n="admin.newProduct">+ NOVO PRODUTO</button>
+                    </div>
+
+                    <div id="admin-products"></div>
+
+                    <button type="button" class="text-button admin-more" id="products-more" data-i18n="admin.loadMore" hidden>CARREGAR MAIS ↓</button>
+                </section>
+
+            </div>
+        </div>
+
+        <!-- Edição de um produto (admin.js preenche ao clicar na lista) -->
+        <dialog class="admin-dialog" id="product-dialog" aria-labelledby="product-dialog-title">
+            <div class="admin-dialog-inner">
+                <button type="button" class="admin-dialog-close" data-close-dialog aria-label="Fechar" data-i18n-attr="aria-label:admin.close">×</button>
+                <div id="product-dialog-body"></div>
+            </div>
+        </dialog>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-top">
+            <div class="footer-brand">
+                <a href="index.html" class="logo">SONORA®</a>
+                <p data-i18n="footer.tagline">Óculos conceituais para quem enxerga além do óbvio.</p>
+            </div>
+
+            <nav class="footer-links" aria-label="Rodapé" data-i18n-attr="aria-label:footer.label">
+                <div>
+                    <h2 data-i18n="footer.explore">Explorar</h2>
+                    <a href="index.html#products" data-i18n="footer.collection">Coleção</a>
+                    <a href="index.html#about" data-i18n="nav.brand">A marca</a>
+                    <a href="index.html#concept" data-i18n="nav.concept">Conceito</a>
+                </div>
+
+                <!-- Preenchido com os modelos à venda (ui.js). Os links abaixo
+                     só aparecem se o catálogo não carregar. -->
+                <div data-footer-models>
+                    <h2 data-i18n="footer.models">Modelos</h2>
+                    <a href="produto.html?id=1">SONORA X-01</a>
+                    <a href="produto.html?id=2">SONORA X-02</a>
+                    <a href="produto.html?id=3">SONORA X-03</a>
+                    <a href="produto.html?id=4">SONORA X-04</a>
+                </div>
+            </nav>
+
+            <form class="newsletter" data-newsletter novalidate>
+                <h2 id="newsletter-title">Newsletter</h2>
+                <p data-i18n="footer.newsletterText">Lançamentos e edições limitadas em primeira mão.</p>
+
+                <div class="newsletter-field">
+                    <label class="visually-hidden" for="newsletter-email" data-i18n="footer.emailLabel">Seu e-mail</label>
+                    <input
+                        type="email"
+                        id="newsletter-email"
+                        name="email"
+                        placeholder="seu@email.com"
+                        autocomplete="email"
+                        aria-describedby="newsletter-message"
+                        data-i18n-attr="placeholder:footer.emailPlaceholder"
+                    >
+                    <button type="submit" aria-label="Inscrever na newsletter" data-i18n-attr="aria-label:footer.subscribe">↗</button>
+                </div>
+
+                <p class="newsletter-message" id="newsletter-message" aria-live="polite"></p>
+            </form>
+        </div>
+
+        <div class="footer-bottom">
+            <span>BEYOND VISION. © 2026 · <a href="/privacidade.html" data-i18n="footer.privacy">Privacidade</a></span>
+            <span data-i18n="footer.credit">Projeto de estudo — marca e produtos fictícios.</span>
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title data-i18n="login.title">Entrar — SONORA®</title>
+    <meta name="description" content="Entre na sua conta SONORA ou crie uma nova para acompanhar seus pedidos." data-i18n-attr="content:login.metaDescription">
+    <meta name="theme-color" content="#e9e7e1">
+    <meta name="robots" content="noindex">
+
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="account.css">
+
+    <!-- Idioma: primeiro e sem defer (veja i18n.js). -->
+    <script src="i18n.js"></script>
+
+    <script src="products.js" defer></script>
+    <script src="cart.js" defer></script>
+    <script src="favorites.js" defer></script>
+    <script src="ui.js" defer></script>
+    <script src="api.js" defer></script>
+    <script src="auth.js" defer></script>
+    <script src="account-sync.js" defer></script>
+    <script src="forms.js" defer></script>
+    <script src="cart-ui.js" defer></script>
+    <script src="login.js" defer></script>
+</head>
+
+<body>
+    <a class="skip-link" href="#main" data-i18n="skip">Pular para o conteúdo</a>
+
+    <header class="header">
+        <a href="index.html" class="logo" aria-label="SONORA — página inicial" data-i18n-attr="aria-label:nav.home">SONORA®</a>
+
+        <nav class="navigation" aria-label="Navegação principal" data-i18n-attr="aria-label:nav.label">
+            <a href="index.html#products" data-i18n="nav.products">Produtos</a>
+            <a href="index.html#about" data-i18n="nav.brand">A marca</a>
+            <a href="index.html#concept" data-i18n="nav.concept">Conceito</a>
+        </nav>
+
+        <div class="header-actions">
+            <button type="button" class="lang-switch" data-lang-switch>
+                <span data-lang="pt">PT</span>
+                <span class="lang-switch-divider" aria-hidden="true">/</span>
+                <span data-lang="en">EN</span>
+            </button>
+
+            <a class="account-link" href="login.html" data-account-link aria-label="Entrar ou criar conta">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <circle cx="12" cy="8" r="4"/>
+                    <path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/>
+                </svg>
+                <span data-account-label>ENTRAR</span>
+            </a>
+
+            <button type="button" class="cart-button" data-cart-open>
+                BAG <span data-cart-count>0</span>
+                <span class="visually-hidden" data-i18n="bag.open">— abrir sacola</span>
+            </button>
+        </div>
+    </header>
+
+    <main id="main" class="auth-page">
+
+        <!-- APRESENTAÇÃO -->
+        <section class="auth-intro" aria-labelledby="auth-title">
+            <p class="eyebrow">SONORA ACCOUNT</p>
+
+            <h1 id="auth-title">Your <span>vision,</span> saved.</h1>
+
+            <ul class="auth-benefits">
+                <li data-i18n="login.benefit1">Acompanhe todos os seus pedidos em um só lugar.</li>
+                <li data-i18n="login.benefit2">Checkout mais rápido, com seus dados já preenchidos.</li>
+                <li data-i18n="login.benefit3">Acesso antecipado às edições do Limited Lab.</li>
+            </ul>
+
+            <div class="auth-visual" aria-hidden="true">
+                <img src="assets/products/x-01/01-three-quarter.jpg" alt="">
+            </div>
+        </section>
+
+
+        <!-- FORMULÁRIOS -->
+        <section class="auth-panel" aria-label="Acesso à conta" data-i18n-attr="aria-label:login.panel">
+
+            <div class="auth-tabs" role="tablist" aria-label="Entrar ou criar conta" data-i18n-attr="aria-label:account.loginLabel">
+                <button type="button" role="tab" id="tab-login" aria-controls="panel-login" aria-selected="true" data-i18n="login.signIn">
+                    Entrar
+                </button>
+                <button type="button" role="tab" id="tab-register" aria-controls="panel-register" aria-selected="false" tabindex="-1" data-i18n="login.signUp">
+                    Criar conta
+                </button>
+            </div>
+
+            <!-- ENTRAR -->
+            <div role="tabpanel" id="panel-login" aria-labelledby="tab-login">
+                <form class="auth-form" id="login-form" novalidate>
+                    <p class="form-message" data-form-message role="alert" hidden></p>
+
+                    <div class="field field--full">
+                        <label for="login-email" data-i18n="checkout.email">E-mail</label>
+                        <input id="login-email" name="email" type="email" autocomplete="email" required aria-describedby="login-email-error" inputmode="email">
+                        <p class="field-error" id="login-email-error"></p>
+                    </div>
+
+                    <div class="field field--full">
+                        <label for="login-password" data-i18n="login.password">Senha</label>
+                        <div class="password-field">
+                            <input id="login-password" name="password" type="password" autocomplete="current-password" required aria-describedby="login-password-error">
+                            <button type="button" class="password-toggle" data-password-toggle="login-password" aria-pressed="false">MOSTRAR</button>
+                        </div>
+                        <p class="field-error" id="login-password-error"></p>
+                        <a class="text-link forgot-link" href="redefinir-senha.html" data-i18n="login.forgot">Esqueci minha senha</a>
+                    </div>
+
+                    <button type="submit" class="button-primary">
+                        <span data-label data-i18n="account.login">ENTRAR</span>
+                        <span aria-hidden="true">↗</span>
+                    </button>
+                </form>
+
+                <p class="auth-switch">
+                    <span data-i18n="login.noAccount">Ainda não tem conta?</span>
+                    <button type="button" class="text-link" data-switch-tab="register" data-i18n="login.signUp">Criar conta</button>
+                </p>
+            </div>
+
+            <!-- CRIAR CONTA -->
+            <div role="tabpanel" id="panel-register" aria-labelledby="tab-register" hidden>
+                <form class="auth-form" id="register-form" novalidate>
+                    <p class="form-message" data-form-message role="alert" hidden></p>
+
+                    <div class="field field--full">
+                        <label for="register-name" data-i18n="checkout.fullName">Nome completo</label>
+                        <input id="register-name" name="name" type="text" autocomplete="name" required aria-describedby="register-name-error">
+                        <p class="field-error" id="register-name-error"></p>
+                    </div>
+
+                    <div class="field field--full">
+                        <label for="register-email" data-i18n="checkout.email">E-mail</label>
+                        <input id="register-email" name="email" type="email" autocomplete="email" required aria-describedby="register-email-error" inputmode="email">
+                        <p class="field-error" id="register-email-error"></p>
+                    </div>
+
+                    <div class="field field--full">
+                        <label for="register-password" data-i18n="login.password">Senha</label>
+                        <div class="password-field">
+                            <input id="register-password" name="password" type="password" autocomplete="new-password" required aria-describedby="register-password-error">
+                            <button type="button" class="password-toggle" data-password-toggle="register-password" aria-pressed="false">MOSTRAR</button>
+                        </div>
+                        <p class="field-error" id="register-password-error"></p>
+                        <p class="field-hint" data-i18n="login.passwordHint">Mínimo de 8 caracteres, com letras e números.</p>
+                    </div>
+
+                    <button type="submit" class="button-primary">
+                        <span data-label data-i18n="login.signUpButton">CRIAR CONTA</span>
+                        <span aria-hidden="true">↗</span>
+                    </button>
+
+                    <p class="legal-note" data-i18n-html="login.privacyNote">
+                        Ao criar a conta, você concorda com a <a href="privacidade.html">Política de privacidade</a>.
+                    </p>
+                </form>
+
+                <p class="auth-switch">
+                    <span data-i18n="login.hasAccount">Já tem conta?</span>
+                    <button type="button" class="text-link" data-switch-tab="login" data-i18n="login.signIn">Entrar</button>
+                </p>
+            </div>
+
+            <p class="auth-note" data-i18n="login.note">
+                Projeto de estudo: use um e-mail fictício se preferir.
+                As senhas são guardadas com criptografia (bcrypt).
+            </p>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-top">
+            <div class="footer-brand">
+                <a href="index.html" class="logo">SONORA®</a>
+                <p data-i18n="footer.tagline">Óculos conceituais para quem enxerga além do óbvio.</p>
+            </div>
+
+            <nav class="footer-links" aria-label="Rodapé" data-i18n-attr="aria-label:footer.label">
+                <div>
+                    <h2 data-i18n="footer.explore">Explorar</h2>
+                    <a href="index.html#products" data-i18n="footer.collection">Coleção</a>
+                    <a href="index.html#about" data-i18n="nav.brand">A marca</a>
+                    <a href="index.html#concept" data-i18n="nav.concept">Conceito</a>
+                </div>
+
+                <!-- Preenchido com os modelos à venda (ui.js). Os links abaixo
+                     só aparecem se o catálogo não carregar. -->
+                <div data-footer-models>
+                    <h2 data-i18n="footer.models">Modelos</h2>
+                    <a href="produto.html?id=1">SONORA X-01</a>
+                    <a href="produto.html?id=2">SONORA X-02</a>
+                    <a href="produto.html?id=3">SONORA X-03</a>
+                    <a href="produto.html?id=4">SONORA X-04</a>
+                </div>
+            </nav>
+
+            <form class="newsletter" data-newsletter novalidate>
+                <h2 id="newsletter-title">Newsletter</h2>
+                <p data-i18n="footer.newsletterText">Lançamentos e edições limitadas em primeira mão.</p>
+
+                <div class="newsletter-field">
+                    <label class="visually-hidden" for="newsletter-email" data-i18n="footer.emailLabel">Seu e-mail</label>
+                    <input
+                        type="email"
+                        id="newsletter-email"
+                        name="email"
+                        placeholder="seu@email.com"
+                        autocomplete="email"
+                        aria-describedby="newsletter-message"
+                        data-i18n-attr="placeholder:footer.emailPlaceholder"
+                    >
+                    <button type="submit" aria-label="Inscrever na newsletter" data-i18n-attr="aria-label:footer.subscribe">↗</button>
+                </div>
+
+                <p class="newsletter-message" id="newsletter-message" aria-live="polite"></p>
+            </form>
+        </div>
+
+        <div class="footer-bottom">
+            <span>BEYOND VISION. © 2026 · <a href="/privacidade.html" data-i18n="footer.privacy">Privacidade</a></span>
+            <span data-i18n="footer.credit">Projeto de estudo — marca e produtos fictícios.</span>
+        </div>
+    </footer>
+
+</body>
+</html>

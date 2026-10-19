@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Checkout — SONORA®</title>
+    <meta
+        name="description"
+        content="Finalize seu pedido SONORA. Projeto demonstrativo: nenhum pagamento é processado."
+        data-i18n-attr="content:checkout.metaDescription"
+    >
+    <meta name="theme-color" content="#e9e7e1">
+    <meta name="robots" content="noindex">
+
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="checkout.css">
+
+    <!-- Idioma: primeiro e sem defer (veja i18n.js). -->
+    <script src="i18n.js"></script>
+
+    <script src="products.js" defer></script>
+    <script src="cart.js" defer></script>
+    <script src="favorites.js" defer></script>
+    <script src="ui.js" defer></script>
+    <script src="api.js" defer></script>
+    <script src="auth.js" defer></script>
+    <script src="account-sync.js" defer></script>
+    <script src="forms.js" defer></script>
+    <script src="checkout.js" defer></script>
+</head>
+
+<body>
+    <a class="skip-link" href="#main" data-i18n="skip">Pular para o conteúdo</a>
+
+    <header class="header">
+        <a href="index.html" class="logo" aria-label="SONORA — página inicial" data-i18n-attr="aria-label:nav.home">SONORA®</a>
+
+        <p class="checkout-secure">
+            <span aria-hidden="true">●</span> <span data-i18n="checkout.demo">CHECKOUT DEMONSTRATIVO</span>
+        </p>
+
+        <div class="header-actions">
+            <button type="button" class="lang-switch" data-lang-switch>
+                <span data-lang="pt">PT</span>
+                <span class="lang-switch-divider" aria-hidden="true">/</span>
+                <span data-lang="en">EN</span>
+            </button>
+
+            <a class="account-link" href="login.html" data-account-link aria-label="Entrar ou criar conta">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <circle cx="12" cy="8" r="4"/>
+                    <path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/>
+                </svg>
+                <span data-account-label>ENTRAR</span>
+            </a>
+
+            <a href="index.html#products" class="back-to-store" data-i18n="checkout.backToStore">
+                VOLTAR À LOJA ↗
+            </a>
+        </div>
+    </header>
+
+    <main id="main" class="checkout">
+
+        <div class="checkout-heading">
+            <p class="eyebrow" data-i18n="checkout.eyebrow">FINALIZAR PEDIDO</p>
+            <h1>Checkout<span>.</span></h1>
+        </div>
+
+
+        <!-- Volta do Stripe: "Confirmando seu pagamento…" -->
+        <p class="checkout-status" id="checkout-status" role="status" hidden></p>
+
+
+        <!-- ESTADO 1: FORMULÁRIO + RESUMO -->
+
+        <div class="checkout-layout" id="checkout-view">
+
+            <form class="checkout-form" id="checkout-form" novalidate>
+
+                <!-- Preenchido por checkout.js conforme o login -->
+                <p class="checkout-account" id="checkout-account" hidden></p>
+
+                <!-- 01. CONTATO -->
+                <fieldset class="checkout-step">
+                    <legend><span>01</span> <span data-i18n="checkout.contact">Contato</span></legend>
+
+                    <div class="field-grid">
+                        <div class="field field--full">
+                            <label for="name" data-i18n="checkout.fullName">Nome completo</label>
+                            <input
+                                id="name"
+                                name="name"
+                                autocomplete="name"
+                                required
+                                aria-describedby="name-error"
+                            >
+                            <p class="field-error" id="name-error"></p>
+                        </div>
+
+                        <div class="field">
+                            <label for="email" data-i18n="checkout.email">E-mail</label>
+                            <input
+                                id="email"
+                                name="email"
+                                type="email"
+                                autocomplete="email"
+                                inputmode="email"
+                                required
+                                aria-describedby="email-error"
+                            >
+                            <p class="field-error" id="email-error"></p>
+                        </div>
+
+                        <div class="field">
+                            <label for="phone" data-i18n="checkout.phone">Celular</label>
+                            <input
+                                id="phone"
+                                name="phone"
+                                type="tel"
+                                autocomplete="tel-national"
+                                inputmode="numeric"
+                                placeholder="(00) 00000-0000"
+                                data-mask="phone"
+                                required
+                                aria-describedby="phone-error"
+                            >
+                            <p class="field-error" id="phone-error"></p>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- 02. ENTREGA -->
+                <fieldset class="checkout-step">
+                    <legend><span>02</span> <span data-i18n="checkout.delivery">Entrega</span></legend>
+
+                    <div class="field-grid">
+                        <div class="field">
+                            <label for="cep" data-i18n="checkout.cep">CEP</label>
+                            <input
+                                id="cep"
+                                name="cep"
+                                autocomplete="postal-code"
+                                inputmode="numeric"
+                                placeholder="00000-000"
+                                data-mask="cep"
+                                required
+                                aria-describedby="cep-error cep-status"
+                            >
+                            <p class="field-error" id="cep-error"></p>
+                            <p class="field-hint" id="cep-status" aria-live="polite" data-i18n="checkout.cepHint">
+                                O endereço é preenchido automaticamente.
+                            </p>
+                        </div>
+
+                        <div class="field field--wide">
+                            <label for="street" data-i18n="checkout.street">Endereço</label>
+                            <input
+                                id="street"
+                                name="street"
+                                autocomplete="address-line1"
+                                required
+                                aria-describedby="street-error"
+                            >
+                            <p class="field-error" id="street-error"></p>
+                        </div>
+
+                        <div class="field">
+                            <label for="number" data-i18n="checkout.number">Número</label>
+                            <input
+                                id="number"
+                                name="number"
+                                inputmode="numeric"
+                                required
+                                aria-describedby="number-error"
+                            >
+                            <p class="field-error" id="number-error"></p>
+                        </div>
+
+                        <div class="field field--wide">
+                            <label for="complement">
+                                <span data-i18n="checkout.complement">Complemento</span> <span class="optional" data-i18n="checkout.optional">(opcional)</span>
+                            </label>
+                            <input
+                                id="complement"
+                                name="complement"
+                                autocomplete="address-line2"
+                            >
+                        </div>
+
+                        <div class="field">
+                            <label for="district" data-i18n="checkout.district">Bairro</label>
+                            <input
+                                id="district"
+                                name="district"
+                                required
+                                aria-describedby="district-error"
+                            >
+                            <p class="field-error" id="district-error"></p>
+                        </div>
+
+                        <div class="field">
+                            <label for="city" data-i18n="checkout.city">Cidade</label>
+                            <input
+                                id="city"
+                                name="city"
+                                autocomplete="address-level2"
+                                required
+                                aria-describedby="city-error"
+                            >
+                            <p class="field-error" id="city-error"></p>
+                        </div>
+
+                        <div class="field">
+                            <label for="state" data-i18n="checkout.state">Estado</label>
+                            <select
+                                id="state"
+                                name="state"
+                                autocomplete="address-level1"
+                                required
+                                aria-describedby="state-error"
+                            >
+                                <option value="" data-i18n="checkout.select">Selecione</option>
+                            </select>
+                            <p class="field-error" id="state-error"></p>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- 03. PAGAMENTO -->
+                <fieldset class="checkout-step">
+                    <legend><span>03</span> <span data-i18n="checkout.payment">Pagamento</span></legend>
+
+                    <div class="payment-options">
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="pix" checked>
+                            <span class="payment-title">Pix</span>
+                            <span class="payment-detail" data-i18n="checkout.pixDiscount">5% de desconto</span>
+                        </label>
+
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="card">
+                            <span class="payment-title" data-i18n="checkout.card">Cartão de crédito</span>
+                            <span class="payment-detail" data-i18n="checkout.cardDetail">Pago na página segura do Stripe</span>
+                        </label>
+
+                        <label class="payment-option">
+                            <input type="radio" name="payment" value="boleto">
+                            <span class="payment-title">Boleto</span>
+                            <span class="payment-detail" data-i18n="checkout.boletoDetail">Vence em 3 dias úteis</span>
+                        </label>
+                    </div>
+
+                    <p class="field-hint payment-note" data-i18n-html="checkout.paymentNote">
+                        Cartão em <strong>modo de teste</strong>: use o número 4242 4242 4242 4242,
+                        qualquer data futura e qualquer CVC. Pix e boleto são simulados.
+                    </p>
+                </fieldset>
+
+                <p class="form-message" data-form-message role="alert" hidden></p>
+
+                <button type="submit" class="checkout-submit" id="checkout-submit">
+                    <span class="checkout-submit-label" data-label data-i18n="checkout.confirm">CONFIRMAR PEDIDO</span>
+                    <span aria-hidden="true">↗</span>
+                </button>
+
+                <p class="checkout-disclaimer" data-i18n="checkout.disclaimer">
+                    Projeto demonstrativo: nenhum pagamento é processado.
+                    O pedido é salvo no banco de dados da loja.
+                </p>
+
+                <p class="checkout-disclaimer" data-i18n-html="checkout.privacyNote">
+                    Seus dados são usados só para entregar o pedido. Veja a <a href="privacidade.html">Política de privacidade</a>.
+                </p>
+            </form>
+
+
+            <aside class="order-summary" aria-labelledby="summary-title">
+                <h2 id="summary-title" data-i18n="checkout.summary">Resumo do pedido</h2>
+
+                <div class="summary-items" id="summary-items"></div>
+
+                <dl class="summary-totals">
+                    <div>
+                        <dt>Subtotal</dt>
+                        <dd id="summary-subtotal">R$ 0,00</dd>
+                    </div>
+
+                    <div>
+                        <dt data-i18n="checkout.shipping">Frete</dt>
+                        <dd data-i18n="checkout.free">Grátis</dd>
+                    </div>
+
+                    <div id="summary-discount-row" hidden>
+                        <dt data-i18n="checkout.pixDiscountRow">Desconto Pix (5%)</dt>
+                        <dd id="summary-discount">− R$ 0,00</dd>
+                    </div>
+
+                    <div class="summary-total">
+                        <dt>Total</dt>
+                        <dd id="summary-total">R$ 0,00</dd>
+                    </div>
+                </dl>
+
+            </aside>
+        </div>
+
+
+        <!-- ESTADO 2: SACOLA VAZIA -->
+
+        <div class="checkout-empty" id="checkout-empty" hidden>
+            <p data-i18n="cart.emptyText">Sua sacola está vazia.</p>
+            <span data-i18n="checkout.emptyText">Escolha um modelo da coleção para continuar.</span>
+
+            <a class="checkout-submit" href="index.html#products">
+                <span data-i18n="checkout.seeCollection">VER A COLEÇÃO</span>
+                <span aria-hidden="true">↗</span>
+            </a>
+        </div>
+
+
+        <!-- ESTADO 3: PEDIDO CONFIRMADO -->
+
+        <section
+            class="checkout-success"
+            id="checkout-success"
+            aria-labelledby="success-title"
+            tabindex="-1"
+            hidden
+        >
+            <p class="eyebrow"><span data-i18n="checkout.orderLabel">PEDIDO</span> <span id="success-number"></span></p>
+
+            <h2 id="success-title" data-i18n-html="checkout.confirmed">
+                Pedido <span>confirmado.</span>
+            </h2>
+
+            <p class="success-message" id="success-message"></p>
+
+            <dl class="success-details" id="success-details"></dl>
+
+            <div class="success-actions">
+                <a class="checkout-submit" href="pedidos.html" id="success-orders-link" hidden>
+                    <span data-i18n="checkout.seeOrders">VER MEUS PEDIDOS</span>
+                    <span aria-hidden="true">↗</span>
+                </a>
+
+                <a class="checkout-submit checkout-submit--ghost" href="index.html">
+                    <span data-i18n="checkout.backHome">VOLTAR À LOJA</span>
+                    <span aria-hidden="true">↗</span>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-top">
+            <div class="footer-brand">
+                <a href="index.html" class="logo">SONORA®</a>
+                <p data-i18n="footer.tagline">Óculos conceituais para quem enxerga além do óbvio.</p>
+            </div>
+
+            <nav class="footer-links" aria-label="Rodapé" data-i18n-attr="aria-label:footer.label">
+                <div>
+                    <h2 data-i18n="footer.explore">Explorar</h2>
+                    <a href="index.html#products" data-i18n="footer.collection">Coleção</a>
+                    <a href="index.html#about" data-i18n="nav.brand">A marca</a>
+                    <a href="index.html#concept" data-i18n="nav.concept">Conceito</a>
+                </div>
+
+                <!-- Preenchido com os modelos à venda (ui.js). Os links abaixo
+                     só aparecem se o catálogo não carregar. -->
+                <div data-footer-models>
+                    <h2 data-i18n="footer.models">Modelos</h2>
+                    <a href="produto.html?id=1">SONORA X-01</a>
+                    <a href="produto.html?id=2">SONORA X-02</a>
+                    <a href="produto.html?id=3">SONORA X-03</a>
+                    <a href="produto.html?id=4">SONORA X-04</a>
+                </div>
+            </nav>
+
+            <form class="newsletter" data-newsletter novalidate>
+                <h2 id="newsletter-title">Newsletter</h2>
+                <p data-i18n="footer.newsletterText">Lançamentos e edições limitadas em primeira mão.</p>
+
+                <div class="newsletter-field">
+                    <label class="visually-hidden" for="newsletter-email" data-i18n="footer.emailLabel">Seu e-mail</label>
+                    <input
+                        type="email"
+                        id="newsletter-email"
+                        name="email"
+                        placeholder="seu@email.com"
+                        autocomplete="email"
+                        aria-describedby="newsletter-message"
+                        data-i18n-attr="placeholder:footer.emailPlaceholder"
+                    >
+                    <button type="submit" aria-label="Inscrever na newsletter" data-i18n-attr="aria-label:footer.subscribe">↗</button>
+                </div>
+
+                <p class="newsletter-message" id="newsletter-message" aria-live="polite"></p>
+            </form>
+        </div>
+
+        <div class="footer-bottom">
+            <span>BEYOND VISION. © 2026 · <a href="/privacidade.html" data-i18n="footer.privacy">Privacidade</a></span>
+            <span data-i18n="footer.credit">Projeto de estudo — marca e produtos fictícios.</span>
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title data-i18n="account.title">Minha conta — SONORA®</title>
+    <meta name="description" content="Seus dados e configurações da conta SONORA." data-i18n-attr="content:account.metaDescription">
+    <meta name="theme-color" content="#e9e7e1">
+    <meta name="robots" content="noindex">
+
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="account.css">
+
+    <!-- Idioma: primeiro e sem defer (veja i18n.js). -->
+    <script src="i18n.js"></script>
+
+    <script src="products.js" defer></script>
+    <script src="cart.js" defer></script>
+    <script src="favorites.js" defer></script>
+    <script src="ui.js" defer></script>
+    <script src="api.js" defer></script>
+    <script src="auth.js" defer></script>
+    <script src="account-sync.js" defer></script>
+    <script src="forms.js" defer></script>
+    <script src="cart-ui.js" defer></script>
+    <script src="account.js" defer></script>
+    <script src="conta.js" defer></script>
+</head>
+
+<body>
+    <a class="skip-link" href="#main" data-i18n="skip">Pular para o conteúdo</a>
+
+    <header class="header">
+        <a href="index.html" class="logo" aria-label="SONORA — página inicial" data-i18n-attr="aria-label:nav.home">SONORA®</a>
+
+        <nav class="navigation" aria-label="Navegação principal" data-i18n-attr="aria-label:nav.label">
+            <a href="index.html#products" data-i18n="nav.products">Produtos</a>
+            <a href="index.html#about" data-i18n="nav.brand">A marca</a>
+            <a href="index.html#concept" data-i18n="nav.concept">Conceito</a>
+        </nav>
+
+        <div class="header-actions">
+            <button type="button" class="lang-switch" data-lang-switch>
+                <span data-lang="pt">PT</span>
+                <span class="lang-switch-divider" aria-hidden="true">/</span>
+                <span data-lang="en">EN</span>
+            </button>
+
+            <a class="account-link" href="login.html" data-account-link aria-label="Entrar ou criar conta">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <circle cx="12" cy="8" r="4"/>
+                    <path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/>
+                </svg>
+                <span data-account-label>ENTRAR</span>
+            </a>
+
+            <button type="button" class="cart-button" data-cart-open>
+                BAG <span data-cart-count>0</span>
+                <span class="visually-hidden" data-i18n="bag.open">— abrir sacola</span>
+            </button>
+        </div>
+    </header>
+
+    <main id="main" class="account-page" aria-busy="true">
+
+        <div class="account-heading">
+            <p class="eyebrow" data-i18n="account.eyebrow">MINHA CONTA</p>
+            <h1><span data-i18n="account.hello">Olá,</span> <span id="account-first-name">…</span></h1>
+            <p class="account-subtitle" id="account-since"></p>
+        </div>
+
+        <div class="account-layout">
+            <nav class="account-nav" aria-label="Minha conta" data-i18n-attr="aria-label:account.nav">
+                <a href="conta.html" aria-current="page" data-i18n="account.profile">Perfil</a>
+                <a href="pedidos.html" data-i18n="account.orders">Pedidos</a>
+                <!-- Só aparece para administradores (account.js). -->
+                <a href="admin.html" data-admin-link data-i18n="admin.nav" hidden>Painel admin</a>
+                <button type="button" data-logout data-i18n="account.logout">Sair</button>
+            </nav>
+
+            <div class="account-content">
+
+                <section class="account-card" aria-labelledby="profile-title">
+                    <h2 id="profile-title" data-i18n="account.personal">Dados pessoais</h2>
+
+                    <form class="account-form" id="profile-form" novalidate>
+                        <p class="form-message" data-form-message role="status" hidden></p>
+
+                        <div class="field-grid field-grid--two">
+                        <div class="field">
+                            <label for="profile-name" data-i18n="checkout.fullName">Nome completo</label>
+                            <input id="profile-name" name="name" type="text" autocomplete="name" required aria-describedby="profile-name-error">
+                            <p class="field-error" id="profile-name-error"></p>
+                        </div>
+
+                        <div class="field">
+                            <label for="profile-phone"><span data-i18n="checkout.phone">Celular</span> <span class="optional" data-i18n="checkout.optional">(opcional)</span></label>
+                            <input id="profile-phone" name="phone" type="tel" autocomplete="tel-national" aria-describedby="profile-phone-error" inputmode="numeric" placeholder="(00) 00000-0000" data-mask="phone">
+                            <p class="field-error" id="profile-phone-error"></p>
+                        </div>
+
+                            <div class="field field--full">
+                                <label for="profile-email" data-i18n="checkout.email">E-mail</label>
+                                <input id="profile-email" type="email" readonly aria-describedby="profile-email-hint">
+                                <p class="field-hint" id="profile-email-hint" data-i18n="account.emailHint">O e-mail é usado para entrar e não pode ser alterado.</p>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="button-primary button-primary--auto">
+                            <span data-label data-i18n="account.save">SALVAR ALTERAÇÕES</span>
+                            <span aria-hidden="true">↗</span>
+                        </button>
+                    </form>
+                </section>
+
+                <section class="account-card" aria-labelledby="password-title">
+                    <h2 id="password-title" data-i18n="login.password">Senha</h2>
+                    <p class="account-card-text" data-i18n="account.passwordText">
+                        Ao trocar a senha, os outros dispositivos conectados à sua conta são desconectados.
+                    </p>
+
+                    <form class="account-form" id="password-form" novalidate>
+                        <p class="form-message" data-form-message role="status" hidden></p>
+
+                        <div class="field-grid field-grid--two">
+                        <div class="field">
+                            <label for="password-current" data-i18n="account.currentPassword">Senha atual</label>
+                            <div class="password-field">
+                                <input id="password-current" name="currentPassword" type="password" autocomplete="current-password" required aria-describedby="password-current-error">
+                                <button type="button" class="password-toggle" data-password-toggle="password-current" aria-pressed="false">MOSTRAR</button>
+                            </div>
+                            <p class="field-error" id="password-current-error"></p>
+                        </div>
+
+                        <div class="field">
+                            <label for="password-new" data-i18n="account.newPassword">Nova senha</label>
+                            <div class="password-field">
+                                <input id="password-new" name="newPassword" type="password" autocomplete="new-password" required aria-describedby="password-new-error">
+                                <button type="button" class="password-toggle" data-password-toggle="password-new" aria-pressed="false">MOSTRAR</button>
+                            </div>
+                            <p class="field-error" id="password-new-error"></p>
+                            <p class="field-hint" data-i18n="login.passwordHint">Mínimo de 8 caracteres, com letras e números.</p>
+                        </div>
+                        </div>
+
+                        <button type="submit" class="button-primary button-primary--auto">
+                            <span data-label data-i18n="account.changePassword">ALTERAR SENHA</span>
+                            <span aria-hidden="true">↗</span>
+                        </button>
+                    </form>
+                </section>
+
+                <!-- EXCLUIR CONTA (LGPD): pede a senha e uma confirmação. -->
+                <section class="account-card account-card--danger" aria-labelledby="delete-title">
+                    <h2 id="delete-title" data-i18n="account.deleteTitle">Excluir conta</h2>
+                    <p class="account-card-text" data-i18n="account.deleteText">
+                        Apaga sua conta, sua sacola e seus favoritos. Os pedidos já feitos continuam registrados na loja, sem ligação com a conta. Não dá para desfazer.
+                    </p>
+
+                    <form class="account-form" id="delete-form" novalidate>
+                        <p class="form-message" data-form-message role="status" hidden></p>
+
+                        <div class="field-grid field-grid--two">
+                            <div class="field">
+                                <label for="delete-password" data-i18n="account.deletePassword">Confirme sua senha</label>
+                                <div class="password-field">
+                                    <input id="delete-password" name="password" type="password" autocomplete="current-password" required aria-describedby="delete-password-error">
+                                    <button type="button" class="password-toggle" data-password-toggle="delete-password" aria-pressed="false">MOSTRAR</button>
+                                </div>
+                                <p class="field-error" id="delete-password-error"></p>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="check-field">
+                                <input type="checkbox" id="delete-confirm" name="confirm" aria-describedby="delete-confirm-error">
+                                <span data-i18n="account.deleteConfirm">Entendo que a exclusão é definitiva e não pode ser desfeita.</span>
+                            </label>
+                            <p class="field-error" id="delete-confirm-error"></p>
+                        </div>
+
+                        <button type="submit" class="button-primary button-primary--auto button-danger">
+                            <span data-label data-i18n="account.deleteButton">EXCLUIR MINHA CONTA</span>
+                            <span aria-hidden="true">↗</span>
+                        </button>
+
+                        <p class="legal-note" data-i18n-html="account.deletePrivacy">
+                            Saiba o que acontece com seus dados na <a href="privacidade.html">Política de privacidade</a>.
+                        </p>
+                    </form>
+                </section>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-top">
+            <div class="footer-brand">
+                <a href="index.html" class="logo">SONORA®</a>
+                <p data-i18n="footer.tagline">Óculos conceituais para quem enxerga além do óbvio.</p>
+            </div>
+
+            <nav class="footer-links" aria-label="Rodapé" data-i18n-attr="aria-label:footer.label">
+                <div>
+                    <h2 data-i18n="footer.explore">Explorar</h2>
+                    <a href="index.html#products" data-i18n="footer.collection">Coleção</a>
+                    <a href="index.html#about" data-i18n="nav.brand">A marca</a>
+                    <a href="index.html#concept" data-i18n="nav.concept">Conceito</a>
+                </div>
+
+                <!-- Preenchido com os modelos à venda (ui.js). Os links abaixo
+                     só aparecem se o catálogo não carregar. -->
+                <div data-footer-models>
+                    <h2 data-i18n="footer.models">Modelos</h2>
+                    <a href="produto.html?id=1">SONORA X-01</a>
+                    <a href="produto.html?id=2">SONORA X-02</a>
+                    <a href="produto.html?id=3">SONORA X-03</a>
+                    <a href="produto.html?id=4">SONORA X-04</a>
+                </div>
+            </nav>
+
+            <form class="newsletter" data-newsletter novalidate>
+                <h2 id="newsletter-title">Newsletter</h2>
+                <p data-i18n="footer.newsletterText">Lançamentos e edições limitadas em primeira mão.</p>
+
+                <div class="newsletter-field">
+                    <label class="visually-hidden" for="newsletter-email" data-i18n="footer.emailLabel">Seu e-mail</label>
+                    <input
+                        type="email"
+                        id="newsletter-email"
+                        name="email"
+                        placeholder="seu@email.com"
+                        autocomplete="email"
+                        aria-describedby="newsletter-message"
+                        data-i18n-attr="placeholder:footer.emailPlaceholder"
+                    >
+                    <button type="submit" aria-label="Inscrever na newsletter" data-i18n-attr="aria-label:footer.subscribe">↗</button>
+                </div>
+
+                <p class="newsletter-message" id="newsletter-message" aria-live="polite"></p>
+            </form>
+        </div>
+
+        <div class="footer-bottom">
+            <span>BEYOND VISION. © 2026 · <a href="/privacidade.html" data-i18n="footer.privacy">Privacidade</a></span>
+            <span data-i18n="footer.credit">Projeto de estudo — marca e produtos fictícios.</span>
+        </div>
+    </footer>
+
+</body>
+</html>

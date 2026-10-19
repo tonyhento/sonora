@@ -1,0 +1,797 @@
+/* =========================
+   SONORA — LOGIN, PERFIL E PEDIDOS
+========================= */
+
+/* =========================
+   01. LOGIN / CADASTRO
+========================= */
+
+.auth-page {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(340px, 0.9fr);
+    gap: clamp(40px, 7vw, 110px);
+    align-items: start;
+    min-height: calc(100svh - var(--header-height));
+    padding: 60px var(--page-padding) 110px;
+}
+
+.auth-intro .eyebrow {
+    margin-bottom: 24px;
+}
+
+.auth-intro h1 {
+    max-width: 640px;
+    font-size: clamp(3rem, 6.5vw, 6.2rem);
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -0.085em;
+}
+
+.auth-intro h1 span {
+    color: var(--color-accent);
+}
+
+.auth-benefits {
+    display: grid;
+    gap: 12px;
+    max-width: 420px;
+    margin-top: 34px;
+    list-style: none;
+}
+
+.auth-benefits li {
+    position: relative;
+    padding-left: 22px;
+    color: #555550;
+    font-size: 0.88rem;
+    line-height: 1.6;
+}
+
+.auth-benefits li::before {
+    content: "";
+    position: absolute;
+    top: 0.55em;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-accent);
+}
+
+.auth-visual {
+    max-width: 560px;
+    margin-top: 30px;
+}
+
+.auth-visual img {
+    width: 100%;
+    max-height: 340px;
+    object-fit: contain;
+    filter: brightness(1.15) contrast(1.02);
+    mix-blend-mode: multiply;
+    -webkit-mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 70%, transparent 100%);
+    mask-image: radial-gradient(ellipse 50% 50% at 50% 50%, #000 70%, transparent 100%);
+}
+
+.auth-panel {
+    position: sticky;
+    top: calc(var(--header-height) + 30px);
+    padding: clamp(26px, 4vw, 42px);
+    background: #dfddd6;
+}
+
+.auth-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #c9c7c0;
+}
+
+.auth-tabs [role="tab"] {
+    position: relative;
+    padding: 0 0 16px;
+    border: 0;
+    background: transparent;
+    color: var(--color-muted);
+
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: -0.4px;
+    text-align: left;
+
+    transition: color 0.2s ease;
+}
+
+.auth-tabs [role="tab"]::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: -1px;
+    left: 0;
+    height: 2px;
+    background: var(--color-text);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+.auth-tabs [role="tab"][aria-selected="true"] {
+    color: var(--color-text);
+}
+
+.auth-tabs [role="tab"][aria-selected="true"]::after {
+    transform: scaleX(1);
+}
+
+.auth-form {
+    display: grid;
+    gap: 18px;
+}
+
+.auth-form .button-primary {
+    margin-top: 6px;
+}
+
+.auth-switch {
+    margin-top: 22px;
+    color: var(--color-muted);
+    font-size: 0.8rem;
+}
+
+.text-link {
+    border: 0;
+    border-bottom: 1px solid currentColor;
+    background: transparent;
+    color: var(--color-text);
+    font-size: inherit;
+    font-weight: 700;
+}
+
+.text-link:hover {
+    color: var(--color-accent);
+}
+
+/* "Esqueci minha senha" (login) */
+.forgot-link {
+    align-self: flex-start;
+    margin-top: 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* Página de nova senha (redefinir-senha.html) */
+.auth-panel-title {
+    margin-bottom: 10px;
+    font-size: 1.6rem;
+    letter-spacing: -0.5px;
+}
+
+.auth-panel-text {
+    margin-bottom: 26px;
+    color: var(--color-muted);
+    font-size: 0.9rem;
+    line-height: 1.7;
+}
+
+#done-view:focus {
+    outline: none;
+}
+
+.auth-note {
+    margin-top: 28px;
+    padding-top: 18px;
+    border-top: 1px solid #c9c7c0;
+    color: var(--color-muted);
+    font-size: 0.7rem;
+    line-height: 1.6;
+}
+
+
+/* =========================
+   02. ESTRUTURA "MINHA CONTA"
+========================= */
+
+.account-page {
+    min-height: calc(100svh - var(--header-height));
+    padding: 50px var(--page-padding) 110px;
+}
+
+.account-page[aria-busy="true"] .account-layout {
+    visibility: hidden;
+}
+
+.account-heading {
+    margin-bottom: 50px;
+}
+
+.account-heading .eyebrow {
+    margin-bottom: 18px;
+}
+
+.account-heading h1 {
+    font-size: clamp(3rem, 7vw, 6rem);
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -0.08em;
+}
+
+.account-heading h1 span {
+    color: var(--color-accent);
+}
+
+.account-subtitle {
+    min-height: 1.5em;
+    margin-top: 18px;
+    color: var(--color-muted);
+    font-size: 0.88rem;
+}
+
+.account-layout {
+    display: grid;
+    grid-template-columns: 200px minmax(0, 1fr);
+    gap: clamp(30px, 6vw, 90px);
+    align-items: start;
+}
+
+.account-nav {
+    position: sticky;
+    top: calc(var(--header-height) + 30px);
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid #cfcdc6;
+}
+
+.account-nav a,
+.account-nav button {
+    padding: 16px 0;
+    border: 0;
+    border-bottom: 1px solid #cfcdc6;
+    background: transparent;
+    color: var(--color-muted);
+
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-align: left;
+    text-transform: uppercase;
+
+    transition: color 0.2s ease;
+}
+
+.account-nav a:hover,
+.account-nav button:hover,
+.account-nav a[aria-current="page"] {
+    color: var(--color-text);
+}
+
+.account-nav a[aria-current="page"]::before {
+    content: "● ";
+    color: var(--color-accent);
+}
+
+.account-content {
+    display: grid;
+    gap: 24px;
+    min-width: 0;
+}
+
+.account-card {
+    padding: clamp(24px, 4vw, 38px);
+    background: #dfddd6;
+}
+
+.account-card h2 {
+    margin-bottom: 8px;
+    font-size: 1.3rem;
+    letter-spacing: -0.5px;
+}
+
+.account-card-text {
+    max-width: 520px;
+    color: var(--color-muted);
+    font-size: 0.8rem;
+    line-height: 1.6;
+}
+
+.account-form {
+    display: grid;
+    gap: 22px;
+    margin-top: 24px;
+}
+
+.field-grid--two {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.field input[readonly] {
+    background: transparent;
+    color: var(--color-muted);
+    cursor: default;
+}
+
+.button-primary--auto {
+    width: auto;
+    justify-self: start;
+    min-width: 260px;
+}
+
+.account-loading {
+    color: var(--color-muted);
+    font-size: 0.85rem;
+}
+
+.account-loading[data-state="error"] {
+    color: #c4321f;
+}
+
+.account-empty {
+    display: grid;
+    justify-items: start;
+    gap: 10px;
+    padding: 40px;
+    background: #dfddd6;
+}
+
+.account-empty p {
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.account-empty span {
+    margin-bottom: 14px;
+    color: var(--color-muted);
+    font-size: 0.85rem;
+}
+
+
+/* =========================
+   03. CARDS DE PEDIDO
+========================= */
+
+.orders-list {
+    display: grid;
+    gap: 18px;
+}
+
+.order-card {
+    padding: clamp(20px, 3vw, 30px);
+    background: #dfddd6;
+}
+
+.order-header {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: 20px;
+}
+
+.order-number {
+    font-size: 1.05rem;
+    letter-spacing: -0.3px;
+}
+
+.order-date {
+    margin-top: 4px;
+    color: var(--color-muted);
+    font-size: 0.75rem;
+}
+
+.order-status {
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.order-status--confirmed {
+    background: rgba(49, 85, 255, 0.12);
+    color: #2340c9;
+}
+
+.order-status--shipped {
+    background: rgba(214, 140, 20, 0.15);
+    color: #8a5a07;
+}
+
+.order-status--delivered {
+    background: rgba(31, 122, 69, 0.13);
+    color: #17603a;
+}
+
+.order-status--cancelled {
+    background: rgba(23, 23, 23, 0.08);
+    color: var(--color-muted);
+}
+
+.order-total {
+    font-size: 1.05rem;
+    font-weight: 800;
+}
+
+.order-thumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+    list-style: none;
+}
+
+.order-thumb {
+    position: relative;
+    width: 64px;
+    height: 64px;
+    background: #e9e7e1;
+}
+
+.order-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.order-thumb-qty {
+    position: absolute;
+    top: -7px;
+    right: -7px;
+    display: grid;
+    place-items: center;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 5px;
+    border-radius: 999px;
+    background: var(--color-text);
+    color: var(--color-bg);
+    font-size: 0.58rem;
+    font-weight: 700;
+}
+
+.order-details {
+    margin-top: 20px;
+    border-top: 1px solid #c9c7c0;
+}
+
+.order-details summary {
+    padding-top: 16px;
+    cursor: pointer;
+    list-style: none;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.order-details summary::-webkit-details-marker {
+    display: none;
+}
+
+.order-details summary::after {
+    content: " +";
+}
+
+.order-details[open] summary::after {
+    content: " −";
+}
+
+.order-details-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+    gap: 36px;
+    margin-top: 22px;
+}
+
+.order-details h4 {
+    margin-bottom: 12px;
+    color: var(--color-muted);
+    font-size: 0.62rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.order-items {
+    list-style: none;
+}
+
+.order-item {
+    display: grid;
+    grid-template-columns: 54px 1fr auto;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid #c9c7c0;
+}
+
+.order-item img,
+.order-item-placeholder {
+    width: 54px;
+    height: 54px;
+    object-fit: cover;
+    background: #e9e7e1;
+}
+
+.order-item-name {
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.order-item-name a:hover {
+    color: var(--color-accent);
+}
+
+.order-item-meta {
+    margin-top: 3px;
+    color: var(--color-muted);
+    font-size: 0.75rem;
+}
+
+.order-item-total {
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.order-meta p {
+    margin-bottom: 22px;
+    font-size: 0.82rem;
+    line-height: 1.7;
+}
+
+.order-totals {
+    display: grid;
+    gap: 8px;
+    font-size: 0.8rem;
+}
+
+.order-totals > div {
+    display: flex;
+    justify-content: space-between;
+}
+
+.order-totals dt {
+    color: #555550;
+}
+
+.order-totals .is-discount dd {
+    color: #1f7a45;
+}
+
+.order-totals .is-total {
+    margin-top: 6px;
+    padding-top: 10px;
+    border-top: 1px solid #c9c7c0;
+    font-size: 0.95rem;
+    font-weight: 800;
+}
+
+
+/* =========================
+   04. RESPONSIVIDADE
+========================= */
+
+@media (max-width: 960px) {
+    .auth-page {
+        grid-template-columns: 1fr;
+    }
+
+    .auth-panel {
+        position: static;
+    }
+
+    .auth-visual {
+        display: none;
+    }
+
+    .account-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .account-nav {
+        position: static;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0 24px;
+        border-top: 0;
+        border-bottom: 1px solid #cfcdc6;
+    }
+
+    .account-nav a,
+    .account-nav button {
+        border-bottom: 0;
+    }
+
+    .account-nav button {
+        margin-left: auto;
+    }
+}
+
+@media (max-width: 760px) {
+    .auth-page,
+    .account-page {
+        padding-top: 35px;
+        padding-bottom: 75px;
+    }
+
+    .field-grid--two {
+        grid-template-columns: 1fr;
+    }
+
+    .button-primary--auto {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .order-header {
+        grid-template-columns: 1fr auto;
+    }
+
+    .order-status {
+        grid-row: 2;
+        justify-self: start;
+    }
+
+    .order-details-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .account-empty {
+        padding: 28px;
+    }
+}
+
+
+/* =========================
+   05. PÁGINA 404
+========================= */
+
+.not-found {
+    display: grid;
+    align-content: center;
+    justify-items: start;
+    gap: 22px;
+    min-height: calc(100svh - var(--header-height));
+    padding: 60px var(--page-padding);
+}
+
+.not-found h1 {
+    font-size: clamp(3.4rem, 10vw, 9rem);
+    font-weight: 900;
+    line-height: 0.88;
+    letter-spacing: -0.09em;
+}
+
+.not-found h1 span {
+    color: var(--color-accent);
+}
+
+.not-found-text {
+    max-width: 380px;
+    color: #555550;
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+
+/* =========================
+   EXCLUIR CONTA
+========================= */
+
+.account-card--danger {
+    border-left: 3px solid #c4321f;
+}
+
+/* Caixa de confirmação ("Entendo que a exclusão é definitiva"). */
+.check-field {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    cursor: pointer;
+}
+
+.check-field input {
+    width: 18px;
+    height: 18px;
+    margin-top: 1px;
+    flex-shrink: 0;
+    accent-color: #c4321f;
+}
+
+.field.has-error .check-field {
+    color: #8f2416;
+}
+
+.button-danger {
+    background: #8f2416;
+}
+
+.button-danger:hover {
+    background: #c4321f;
+}
+
+/* Aviso pequeno com link (cadastro, excluir conta). */
+.legal-note {
+    color: var(--color-muted);
+    font-size: 0.72rem;
+    line-height: 1.6;
+}
+
+.legal-note a {
+    color: var(--color-text);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.legal-note a:hover {
+    color: var(--color-accent);
+}
+
+
+/* =========================
+   POLÍTICA DE PRIVACIDADE
+========================= */
+
+.legal-content {
+    display: grid;
+    gap: 40px;
+    max-width: 760px;
+}
+
+.legal-intro {
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+.legal-section {
+    padding-top: 28px;
+    border-top: 1px solid #cfcdc6;
+}
+
+.legal-section h2 {
+    margin-bottom: 14px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.legal-section p,
+.legal-section li {
+    color: #3d3d3a;
+    font-size: 0.88rem;
+    line-height: 1.75;
+}
+
+.legal-section p + p {
+    margin-top: 12px;
+}
+
+.legal-section ul {
+    display: grid;
+    gap: 8px;
+    margin-top: 10px;
+    padding-left: 18px;
+}
+
+.legal-section strong {
+    color: var(--color-text);
+}
+
+.legal-content a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.legal-content a:hover {
+    color: var(--color-accent);
+}
+
+/* O texto da caixa de confirmação é frase normal, não rótulo. */
+.field .check-field {
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+}

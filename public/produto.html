@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--
+        Template único para todos os modelos.
+        O conteúdo é preenchido por produto.js a partir do
+        catálogo (products.js), com base no parâmetro ?id=
+        Ex.: produto.html?id=2
+    -->
+
+    <meta
+        name="description"
+        content="SONORA — Óculos futuristas que expandem os limites do design."
+        data-i18n-attr="content:meta.home.description"
+    >
+
+    <title>SONORA® — Beyond Vision</title>
+    <meta name="theme-color" content="#e9e7e1">
+
+    <meta property="og:type" content="product">
+    <meta property="og:site_name" content="SONORA®">
+    <meta property="og:title" content="SONORA® — Beyond Vision">
+    <meta property="og:description" content="Óculos conceituais que expandem os limites do design." data-i18n-attr="content:meta.share.description">
+    <meta property="og:image" content="assets/brand/banner.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="produto.css">
+
+    <!-- Idioma: primeiro e sem defer (veja i18n.js). -->
+    <script src="i18n.js"></script>
+
+    <script src="products.js" defer></script>
+    <script src="cart.js" defer></script>
+    <script src="favorites.js" defer></script>
+    <script src="ui.js" defer></script>
+    <script src="api.js" defer></script>
+    <script src="auth.js" defer></script>
+    <script src="account-sync.js" defer></script>
+    <script src="reveal.js" defer></script>
+    <script src="cart-ui.js" defer></script>
+    <script src="produto.js" defer></script>
+</head>
+
+<body>
+    <a class="skip-link" href="#main" data-i18n="skip">Pular para o conteúdo</a>
+
+    <header class="header">
+        <a href="index.html" class="logo" aria-label="SONORA — página inicial" data-i18n-attr="aria-label:nav.home">SONORA®</a>
+
+        <nav class="navigation" aria-label="Navegação principal" data-i18n-attr="aria-label:nav.label">
+            <a href="index.html#products" data-i18n="nav.products">Produtos</a>
+            <a href="index.html#about" data-i18n="nav.brand">A marca</a>
+            <a href="index.html#concept" data-i18n="nav.concept">Conceito</a>
+        </nav>
+
+        <div class="header-actions">
+            <button type="button" class="lang-switch" data-lang-switch>
+                <span data-lang="pt">PT</span>
+                <span class="lang-switch-divider" aria-hidden="true">/</span>
+                <span data-lang="en">EN</span>
+            </button>
+
+            <a class="account-link" href="login.html" data-account-link aria-label="Entrar ou criar conta">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <circle cx="12" cy="8" r="4"/>
+                    <path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/>
+                </svg>
+                <span data-account-label>ENTRAR</span>
+            </a>
+
+            <button type="button" class="cart-button" data-cart-open>
+                BAG <span data-cart-count>0</span>
+                <span class="visually-hidden" data-i18n="bag.open">— abrir sacola</span>
+            </button>
+        </div>
+    </header>
+
+    <main id="main">
+
+        <nav class="breadcrumbs" aria-label="Você está aqui" data-i18n-attr="aria-label:product.breadcrumb">
+            <a href="index.html">HOME</a>
+            <span>/</span>
+            <a href="index.html#products">COLLECTION</a>
+            <span>/</span>
+            <span id="breadcrumb-current" aria-current="page"></span>
+        </nav>
+
+        <section class="product-detail" aria-labelledby="product-title">
+
+            <!-- GALERIA -->
+
+            <div class="detail-gallery">
+
+                <!-- Carrossel: arraste, use as setas ou o teclado. -->
+                <div
+                    class="main-image"
+                    id="product-carousel"
+                    role="region"
+                    aria-roledescription="carrossel"
+                    aria-label="Imagens do produto"
+                    data-i18n-attr="aria-roledescription:product.carousel; aria-label:product.images"
+                >
+                    <span class="image-label" id="image-label"></span>
+
+                    <div class="carousel-track" id="carousel-track"></div>
+
+                    <button
+                        type="button"
+                        class="carousel-arrow carousel-prev"
+                        id="carousel-prev"
+                        aria-label="Imagem anterior"
+                        data-i18n-attr="aria-label:product.prevImage"
+                    >←</button>
+
+                    <button
+                        type="button"
+                        class="carousel-arrow carousel-next"
+                        id="carousel-next"
+                        aria-label="Próxima imagem"
+                        data-i18n-attr="aria-label:product.nextImage"
+                    >→</button>
+
+                    <span
+                        class="image-counter"
+                        id="image-counter"
+                        aria-live="polite"
+                    ></span>
+                </div>
+
+                <div
+                    class="thumbnail-list"
+                    id="thumbnail-list"
+                    role="group"
+                    aria-label="Galeria de imagens"
+                    data-i18n-attr="aria-label:product.gallery"
+                ></div>
+
+                <p class="gallery-note">
+                    FORM FOLLOWS THE FUTURE.
+                </p>
+
+            </div>
+
+
+            <!-- INFORMAÇÕES DO PRODUTO -->
+
+            <div class="detail-info">
+
+                <p class="eyebrow" id="product-eyebrow"></p>
+
+                <h1 id="product-title">
+                    SONORA <span id="product-code"></span>
+                </h1>
+
+                <p class="product-subtitle" id="product-subtitle"></p>
+
+                <p class="detail-price" id="detail-price"></p>
+
+                <!-- Estoque baixo ou esgotado (produto.js) -->
+                <p class="stock-note" id="stock-note" hidden></p>
+
+                <div class="detail-divider"></div>
+
+                <p class="detail-description" id="product-description"></p>
+
+
+                <!-- QUANTIDADE -->
+
+                <div class="quantity-section">
+                    <span id="quantity-label" data-i18n="product.quantity">QUANTIDADE</span>
+
+                    <div
+                        class="quantity-selector"
+                        role="group"
+                        aria-labelledby="quantity-label"
+                    >
+                        <button
+                            type="button"
+                            id="quantity-minus"
+                            aria-label="Diminuir quantidade"
+                            data-i18n-attr="aria-label:product.decrease"
+                        >−</button>
+
+                        <span id="quantity-value" aria-live="polite">1</span>
+
+                        <button
+                            type="button"
+                            id="quantity-plus"
+                            aria-label="Aumentar quantidade"
+                            data-i18n-attr="aria-label:product.increase"
+                        >+</button>
+                    </div>
+                </div>
+
+
+                <!-- ADICIONAR À SACOLA -->
+
+                <div class="purchase-actions">
+                    <button
+                        type="button"
+                        class="detail-add-button"
+                        id="detail-add-button"
+                    >
+                        <span class="detail-add-label">ADICIONAR À SACOLA</span>
+                        <span aria-hidden="true">↗</span>
+                    </button>
+
+                    <!-- Preenchido por produto.js (data-favorite-id + ícone) -->
+                    <button
+                        type="button"
+                        class="detail-favorite"
+                        id="detail-favorite"
+                        aria-pressed="false"
+                    ></button>
+                </div>
+
+                <p class="purchase-note" id="purchase-note" aria-live="polite" data-i18n="product.note">
+                    Produto conceitual para demonstração do projeto.
+                </p>
+
+
+                <!-- ESPECIFICAÇÕES -->
+
+                <div class="specifications">
+
+                    <details open>
+                        <summary data-i18n="product.concept">CONCEITO</summary>
+                        <p id="product-concept"></p>
+                    </details>
+
+                    <details>
+                        <summary data-i18n="product.specs">ESPECIFICAÇÕES</summary>
+                        <dl class="spec-list" id="product-specs"></dl>
+                    </details>
+
+                    <details>
+                        <summary data-i18n="product.materials">MATERIAIS</summary>
+                        <p id="product-materials"></p>
+                    </details>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- OUTROS MODELOS -->
+
+        <section class="related" aria-labelledby="related-title">
+            <div class="section-heading" data-reveal>
+                <div>
+                    <p class="eyebrow">THE COLLECTION — 2026</p>
+                    <h2 id="related-title" data-i18n-html="product.related">Outros <span>modelos.</span></h2>
+                </div>
+
+                <a class="text-button" href="index.html#products" data-i18n="product.seeCollection">
+                    VER COLEÇÃO COMPLETA ↗
+                </a>
+            </div>
+
+            <div class="product-grid" id="related-grid"></div>
+        </section>
+
+
+        <!-- HISTÓRIA DO PRODUTO -->
+
+        <section class="product-story" aria-labelledby="story-title">
+
+            <p class="eyebrow" id="story-eyebrow" data-reveal></p>
+
+            <h2 id="story-title" data-reveal></h2>
+
+            <div class="story-bottom" data-reveal>
+                <p id="story-text"></p>
+
+                <span id="story-signature"></span>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-top">
+            <div class="footer-brand">
+                <a href="index.html" class="logo">SONORA®</a>
+                <p data-i18n="footer.tagline">Óculos conceituais para quem enxerga além do óbvio.</p>
+            </div>
+
+            <nav class="footer-links" aria-label="Rodapé" data-i18n-attr="aria-label:footer.label">
+                <div>
+                    <h2 data-i18n="footer.explore">Explorar</h2>
+                    <a href="index.html#products" data-i18n="footer.collection">Coleção</a>
+                    <a href="index.html#about" data-i18n="nav.brand">A marca</a>
+                    <a href="index.html#concept" data-i18n="nav.concept">Conceito</a>
+                </div>
+
+                <!-- Preenchido com os modelos à venda (ui.js). Os links abaixo
+                     só aparecem se o catálogo não carregar. -->
+                <div data-footer-models>
+                    <h2 data-i18n="footer.models">Modelos</h2>
+                    <a href="produto.html?id=1">SONORA X-01</a>
+                    <a href="produto.html?id=2">SONORA X-02</a>
+                    <a href="produto.html?id=3">SONORA X-03</a>
+                    <a href="produto.html?id=4">SONORA X-04</a>
+                </div>
+            </nav>
+
+            <form class="newsletter" data-newsletter novalidate>
+                <h2 id="newsletter-title">Newsletter</h2>
+                <p data-i18n="footer.newsletterText">Lançamentos e edições limitadas em primeira mão.</p>
+
+                <div class="newsletter-field">
+                    <label class="visually-hidden" for="newsletter-email" data-i18n="footer.emailLabel">Seu e-mail</label>
+                    <input
+                        type="email"
+                        id="newsletter-email"
+                        name="email"
+                        placeholder="seu@email.com"
+                        autocomplete="email"
+                        aria-describedby="newsletter-message"
+                        data-i18n-attr="placeholder:footer.emailPlaceholder"
+                    >
+                    <button type="submit" aria-label="Inscrever na newsletter" data-i18n-attr="aria-label:footer.subscribe">↗</button>
+                </div>
+
+                <p class="newsletter-message" id="newsletter-message" aria-live="polite"></p>
+            </form>
+        </div>
+
+        <div class="footer-bottom">
+            <span>BEYOND VISION. © 2026 · <a href="/privacidade.html" data-i18n="footer.privacy">Privacidade</a></span>
+            <span data-i18n="footer.credit">Projeto de estudo — marca e produtos fictícios.</span>
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+{
+  "name": "sonora",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SONORA — e-commerce conceitual de óculos (HTML/CSS/JS + Node.js, Express e PostgreSQL).",
+  "type": "module",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "admin": "node scripts/make-admin.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "author": "Hentony Almeida",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "connect-pg-simple": "^10.0.0",
+    "dotenv": "^18.0.8",
+    "express": "^5.3.0",
+    "express-rate-limit": "^8.7.1",
+    "express-session": "^1.19.0",
+    "helmet": "^8.3.0",
+    "nodemailer": "^10.0.10",
+    "pg": "^8.23.1",
+    "stripe": "^23.0.0",
+    "zod": "^4.6.7"
+  }
+}

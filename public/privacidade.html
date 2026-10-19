@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title data-i18n="privacy.title">Política de privacidade — SONORA®</title>
+    <meta name="description" content="Como a SONORA trata os seus dados: o que é coletado, para quê, com quem é compartilhado e como excluir sua conta." data-i18n-attr="content:privacy.metaDescription">
+    <meta name="theme-color" content="#e9e7e1">
+
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="account.css">
+
+    <!-- Idioma: primeiro e sem defer (veja i18n.js). -->
+    <script src="i18n.js"></script>
+
+    <script src="products.js" defer></script>
+    <script src="cart.js" defer></script>
+    <script src="favorites.js" defer></script>
+    <script src="ui.js" defer></script>
+    <script src="api.js" defer></script>
+    <script src="auth.js" defer></script>
+    <script src="account-sync.js" defer></script>
+    <script src="forms.js" defer></script>
+    <script src="cart-ui.js" defer></script>
+</head>
+
+<body>
+    <a class="skip-link" href="#main" data-i18n="skip">Pular para o conteúdo</a>
+
+    <header class="header">
+        <a href="index.html" class="logo" aria-label="SONORA — página inicial" data-i18n-attr="aria-label:nav.home">SONORA®</a>
+
+        <nav class="navigation" aria-label="Navegação principal" data-i18n-attr="aria-label:nav.label">
+            <a href="index.html#products" data-i18n="nav.products">Produtos</a>
+            <a href="index.html#about" data-i18n="nav.brand">A marca</a>
+            <a href="index.html#concept" data-i18n="nav.concept">Conceito</a>
+        </nav>
+
+        <div class="header-actions">
+            <button type="button" class="lang-switch" data-lang-switch>
+                <span data-lang="pt">PT</span>
+                <span class="lang-switch-divider" aria-hidden="true">/</span>
+                <span data-lang="en">EN</span>
+            </button>
+
+            <a class="account-link" href="login.html" data-account-link aria-label="Entrar ou criar conta">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <circle cx="12" cy="8" r="4"/>
+                    <path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/>
+                </svg>
+                <span data-account-label>ENTRAR</span>
+            </a>
+
+            <button type="button" class="cart-button" data-cart-open>
+                BAG <span data-cart-count>0</span>
+                <span class="visually-hidden" data-i18n="bag.open">— abrir sacola</span>
+            </button>
+        </div>
+    </header>
+
+        <main id="main" class="account-page legal-page">
+
+        <div class="account-heading">
+            <p class="eyebrow" data-i18n="privacy.eyebrow">PRIVACIDADE</p>
+            <h1 data-i18n-html="privacy.heading">Política de <span>privacidade.</span></h1>
+            <p class="account-subtitle" data-i18n="privacy.updated">Última atualização: outubro de 2026.</p>
+        </div>
+
+        <article class="legal-content">
+            <p class="legal-intro" data-i18n-html="privacy.intro"></p>
+
+            <section class="legal-section" aria-labelledby="privacy-collect">
+                <h2 id="privacy-collect" data-i18n="privacy.collectTitle"></h2>
+                <div data-i18n-html="privacy.collectBody"></div>
+            </section>
+
+            <section class="legal-section" aria-labelledby="privacy-use">
+                <h2 id="privacy-use" data-i18n="privacy.useTitle"></h2>
+                <div data-i18n-html="privacy.useBody"></div>
+            </section>
+
+            <section class="legal-section" aria-labelledby="privacy-share">
+                <h2 id="privacy-share" data-i18n="privacy.shareTitle"></h2>
+                <div data-i18n-html="privacy.shareBody"></div>
+            </section>
+
+            <section class="legal-section" aria-labelledby="privacy-cookies">
+                <h2 id="privacy-cookies" data-i18n="privacy.cookiesTitle"></h2>
+                <div data-i18n-html="privacy.cookiesBody"></div>
+            </section>
+
+            <section class="legal-section" aria-labelledby="privacy-retention">
+                <h2 id="privacy-retention" data-i18n="privacy.retentionTitle"></h2>
+                <div data-i18n-html="privacy.retentionBody"></div>
+            </section>
+
+            <section class="legal-section" aria-labelledby="privacy-rights">
+                <h2 id="privacy-rights" data-i18n="privacy.rightsTitle"></h2>
+                <div data-i18n-html="privacy.rightsBody"></div>
+            </section>
+
+            <section class="legal-section" aria-labelledby="privacy-security">
+                <h2 id="privacy-security" data-i18n="privacy.securityTitle"></h2>
+                <div data-i18n-html="privacy.securityBody"></div>
+            </section>
+
+            <section class="legal-section" aria-labelledby="privacy-contact">
+                <h2 id="privacy-contact" data-i18n="privacy.contactTitle"></h2>
+                <div data-i18n-html="privacy.contactBody"></div>
+            </section>
+        </article>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-top">
+            <div class="footer-brand">
+                <a href="index.html" class="logo">SONORA®</a>
+                <p data-i18n="footer.tagline">Óculos conceituais para quem enxerga além do óbvio.</p>
+            </div>
+
+            <nav class="footer-links" aria-label="Rodapé" data-i18n-attr="aria-label:footer.label">
+                <div>
+                    <h2 data-i18n="footer.explore">Explorar</h2>
+                    <a href="index.html#products" data-i18n="footer.collection">Coleção</a>
+                    <a href="index.html#about" data-i18n="nav.brand">A marca</a>
+                    <a href="index.html#concept" data-i18n="nav.concept">Conceito</a>
+                </div>
+
+                <!-- Preenchido com os modelos à venda (ui.js). Os links abaixo
+                     só aparecem se o catálogo não carregar. -->
+                <div data-footer-models>
+                    <h2 data-i18n="footer.models">Modelos</h2>
+                    <a href="produto.html?id=1">SONORA X-01</a>
+                    <a href="produto.html?id=2">SONORA X-02</a>
+                    <a href="produto.html?id=3">SONORA X-03</a>
+                    <a href="produto.html?id=4">SONORA X-04</a>
+                </div>
+            </nav>
+
+            <form class="newsletter" data-newsletter novalidate>
+                <h2 id="newsletter-title">Newsletter</h2>
+                <p data-i18n="footer.newsletterText">Lançamentos e edições limitadas em primeira mão.</p>
+
+                <div class="newsletter-field">
+                    <label class="visually-hidden" for="newsletter-email" data-i18n="footer.emailLabel">Seu e-mail</label>
+                    <input
+                        type="email"
+                        id="newsletter-email"
+                        name="email"
+                        placeholder="seu@email.com"
+                        autocomplete="email"
+                        aria-describedby="newsletter-message"
+                        data-i18n-attr="placeholder:footer.emailPlaceholder"
+                    >
+                    <button type="submit" aria-label="Inscrever na newsletter" data-i18n-attr="aria-label:footer.subscribe">↗</button>
+                </div>
+
+                <p class="newsletter-message" id="newsletter-message" aria-live="polite"></p>
+            </form>
+        </div>
+
+        <div class="footer-bottom">
+            <span>BEYOND VISION. © 2026 · <a href="/privacidade.html" data-i18n="footer.privacy">Privacidade</a></span>
+            <span data-i18n="footer.credit">Projeto de estudo — marca e produtos fictícios.</span>
+        </div>
+    </footer>
+
+</body>
+</html>
