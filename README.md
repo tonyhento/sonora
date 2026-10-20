@@ -4,6 +4,8 @@ E-commerce **full-stack** de óculos conceituais: front-end em **HTML, CSS e Jav
 
 > Projeto de estudo: a marca e os produtos são fictícios e nenhuma cobrança real é feita.
 
+![Página inicial do SONORA](docs/preview-home.jpg)
+
 ---
 
 ## Destaques
@@ -16,6 +18,8 @@ E-commerce **full-stack** de óculos conceituais: front-end em **HTML, CSS e Jav
 - **Segurança:** bcrypt, sessão em cookie `httpOnly`, validação com Zod, CSP, limite de tentativas e SQL parametrizado
 - **LGPD:** política de privacidade e exclusão de conta
 - Fundo animado em **WebGL** (shader GLSL) e nenhum framework no front-end
+
+![Coleção com filtros por série, favoritos e ordenação](docs/preview-collection.jpg)
 
 ---
 
@@ -112,6 +116,7 @@ server/
   middleware/    Login, admin, validação e erros
 database/    schema.sql: tabelas e catálogo inicial
 scripts/     npm run admin
+docs/        Imagens deste README
 ```
 
 | Decisão | Por quê |
